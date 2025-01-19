@@ -710,15 +710,15 @@ var aesjs = (function (root) {
     var x = [84, 101, 120, 116, 32, 109, 97, 121, 32, 98, 101, 32, 97, 110, 121, 32]
     var V = [169, 118, 171, 96, 247, 100, 174, 49, 115, 143, 96, 133, 240, 174, 99, 105]
     var z = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < 128; i++) {
       var j = Math.floor(i / 8);
       var k = i % 8;
       //var xi = (a[j] >> (8 - k - 1)) & 1;
       var xi = (x[j] >> k) & 1;
       if (xi == 1) {
         z = z.map((el, id) => (el ^ V[id]));
-        console.log("V: " + V.toString());
-        console.log("z: " + z + ", i: " + i);
+        // console.log("V: " + V.toString());
+        // console.log("z: " + z + ", i: " + i);
       }
       var lsbV = (z[15] >> 7) & 0x01;
       //console.log("lsbV: " + lsbV);1
@@ -726,7 +726,7 @@ var aesjs = (function (root) {
       var carry = 0;
       for (var ii = 0; ii < V.length; ii++) {
         var byteCopy = V[ii];
-        V[ii] = (V[ii] << 1) & 0x11;
+        V[ii] = (V[ii] << 1) & 0xff;
         if (carry == 1) {
           V[ii] = V[ii] | 0x01;
         }
